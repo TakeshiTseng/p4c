@@ -85,3 +85,7 @@ BaseCompileContext::getDiagnosticAction(cstring /* diagnostic */,
                                         DiagnosticAction defaultAction) {
     return defaultAction;
 }
+
+void BaseCompileContext::setErrorReporter(ErrorReporter errorReporter) {
+    errorReporterInstance = errorReporter;
+}

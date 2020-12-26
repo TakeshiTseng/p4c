@@ -102,6 +102,8 @@ class BaseCompileContext : public ICompileContext {
     virtual DiagnosticAction
     getDiagnosticAction(cstring diagnostic, DiagnosticAction defaultAction);
 
+    void setErrorReporter(ErrorReporter errorReporter);
+
  private:
     /// Error and warning tracking facilities for this compilation context.
     ErrorReporter errorReporterInstance;
