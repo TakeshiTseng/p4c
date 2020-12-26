@@ -34,7 +34,7 @@ enum class DiagnosticAction {
 // that use boost::format format strings, i.e.,
 // %1%, %2%, etc (starting at 1, not at 0).
 // Some compatibility for printf-style arguments is also supported.
-class ErrorReporter final {
+class ErrorReporter {
  private:
     std::ostream* outputstream;
 
