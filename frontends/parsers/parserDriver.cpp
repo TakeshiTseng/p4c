@@ -87,7 +87,7 @@ void AbstractParserDriver::onReadLineNumber(const char* text) {
     const bool consumedEntireToken = strlen(last) == 0;
     if (errno != 0 || !consumedEntireToken) {
         auto& context = BaseCompileContext::get();
-        context.errorReporter().parser_error(sources,
+        context.errorReporter()->parser_error(sources,
                                              "Error parsing line number %s",
                                              text);
     }
@@ -112,11 +112,11 @@ void AbstractParserDriver::onParseError(const Util::SourceInfo& location,
         "syntax error, unexpected IDENTIFIER";
     auto& context = BaseCompileContext::get();
     if (boost::equal(message, unexpectedIdentifierError)) {
-        context.errorReporter().parser_error(location, boost::format("%s \"%s\"") %
+        context.errorReporter()->parser_error(location, boost::format("%s \"%s\"") %
                                                        unexpectedIdentifierError %
                                                        lastIdentifier);
     } else {
-        context.errorReporter().parser_error(location, message);
+        context.errorReporter()->parser_error(location, message);
     }
 }
 

@@ -191,7 +191,7 @@ CompilerOptions::CompilerOptions() : Util::Options(defaultMessage) {
     registerOption("--maxErrorCount", "errorCount",
                    [](const char *arg) {
                        auto maxError = strtoul(arg, nullptr, 10);
-                       P4CContext::get().errorReporter().setMaxErrorCount(maxError);
+                       P4CContext::get().errorReporter()->setMaxErrorCount(maxError);
                        return true; },
                    "Set the maximum number of errors to display before failing.");
     registerOption("--testJson", nullptr,

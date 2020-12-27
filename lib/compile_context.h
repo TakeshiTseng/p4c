@@ -89,7 +89,7 @@ class BaseCompileContext : public ICompileContext {
     static BaseCompileContext& get();
 
     /// @return the error reporter for this compilation context.
-    ErrorReporter& errorReporter();
+    std::shared_ptr<ErrorReporter> errorReporter();
 
     /// @return the default diagnostic action for calls to `::warning()`.
     virtual DiagnosticAction getDefaultWarningDiagnosticAction();
@@ -102,11 +102,11 @@ class BaseCompileContext : public ICompileContext {
     virtual DiagnosticAction
     getDiagnosticAction(cstring diagnostic, DiagnosticAction defaultAction);
 
-    void setErrorReporter(ErrorReporter errorReporter);
+    void setErrorReporter(std::shared_ptr<ErrorReporter> errorReporter);
 
  private:
     /// Error and warning tracking facilities for this compilation context.
-    ErrorReporter errorReporterInstance;
+    std::shared_ptr<ErrorReporter> errorReporterInstance;
 };
 
 #endif /* P4C_LIB_COMPILE_CONTEXT_H_ */

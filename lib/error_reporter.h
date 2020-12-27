@@ -180,13 +180,20 @@ class ErrorReporter {
 
     std::ostream* getOutputStream() const { return outputstream; }
 
+    virtual
+    void parser_error(const Util::SourceInfo& location, const std::string& message) {
+        errorCount++;
+        *outputstream << message;
+        emit_message(location.toSourceFragment());  // This flushes the stream.
+    }
+
     /// Reports an error @message at @location. This allows us to use the
     /// position information provided by Bison.
     template <typename T>
     void parser_error(const Util::SourceInfo& location, const T& message) {
-        errorCount++;
-        *outputstream << location.toPositionString() << ":" << message << std::endl;
-        emit_message(location.toSourceFragment());  // This flushes the stream.
+        std::stringstream ss;
+        ss << message; // better idea?
+        parser_error(location, ss.str());
     }
 
     /**
@@ -195,7 +202,7 @@ class ErrorReporter {
      * generator's C-based Bison parser, which doesn't have location information
      * available.
      */
-    void parser_error(const Util::InputSources* sources, const char *fmt, ...) {
+    virtual void parser_error(const Util::InputSources* sources, const char *fmt, ...) {
         va_list args;
         va_start(args, fmt);
 
@@ -242,11 +249,11 @@ class ErrorReporter {
         defaultWarningDiagnosticAction = action;
     }
 
- private:
+  protected:
     unsigned errorCount;
     unsigned warningCount;
     unsigned maxErrorCount;  /// the maximum number of errors that we print before fail
-
+  private:
     /// The default diagnostic action for calls to `::warning()`.
     DiagnosticAction defaultWarningDiagnosticAction;
 

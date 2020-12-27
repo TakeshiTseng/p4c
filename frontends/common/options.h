@@ -166,24 +166,24 @@ class P4CContext : public BaseCompileContext {
 
     /// @return the default diagnostic action for calls to `::warning()`.
     DiagnosticAction getDefaultWarningDiagnosticAction() final {
-        return errorReporter().getDefaultWarningDiagnosticAction();
+        return errorReporter()->getDefaultWarningDiagnosticAction();
     }
 
     /// set the default diagnostic action for calls to `::warning()`.
     void setDefaultWarningDiagnosticAction(DiagnosticAction action) {
-        errorReporter().setDefaultWarningDiagnosticAction(action);
+        errorReporter()->setDefaultWarningDiagnosticAction(action);
     }
 
     /// @return the action to take for the given diagnostic, falling back to the
     /// default action if it wasn't overridden via the command line or a pragma.
     DiagnosticAction
     getDiagnosticAction(cstring diagnostic, DiagnosticAction defaultAction) final {
-        return errorReporter().getDiagnosticAction(diagnostic, defaultAction);
+        return errorReporter()->getDiagnosticAction(diagnostic, defaultAction);
     }
 
     /// Set the action to take for the given diagnostic.
     void setDiagnosticAction(cstring diagnostic, DiagnosticAction action) {
-        errorReporter().setDiagnosticAction(diagnostic, action);
+        errorReporter()->setDiagnosticAction(diagnostic, action);
     }
 
  protected:

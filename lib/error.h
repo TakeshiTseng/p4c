@@ -29,13 +29,13 @@ limitations under the License.
 /// @return the number of errors encountered so far in the current compilation
 /// context.
 inline unsigned errorCount() {
-    return BaseCompileContext::get().errorReporter().getErrorCount();
+    return BaseCompileContext::get().errorReporter()->getErrorCount();
 }
 
 /// @return the number of diagnostics (either errors or warnings) encountered so
 /// far in the current compilation context.
 inline unsigned diagnosticCount() {
-    return BaseCompileContext::get().errorReporter().getDiagnosticCount();
+    return BaseCompileContext::get().errorReporter()->getDiagnosticCount();
 }
 
 // Errors (and warnings) are specified using boost::format format strings, i.e.,
@@ -49,7 +49,7 @@ template <typename... T>
 inline void error(const char* format, T... args) {
     auto& context = BaseCompileContext::get();
     auto action = context.getDefaultErrorDiagnosticAction();
-    context.errorReporter().diagnose(action, nullptr, format, "", args...);
+    context.errorReporter()->diagnose(action, nullptr, format, "", args...);
 }
 #endif
 
@@ -61,7 +61,7 @@ template<class T,
 void error(const int kind, const char *format, const T *node, Args... args) {
     auto& context = BaseCompileContext::get();
     auto action = context.getDefaultErrorDiagnosticAction();
-    context.errorReporter().diagnose(action, kind, format, "", node, args...);
+    context.errorReporter()->diagnose(action, kind, format, "", node, args...);
 }
 
 /// This is similar to the above method, but also has a suffix
@@ -72,7 +72,7 @@ void errorWithSuffix(const int kind, const char *format, const char* suffix,
                      const T *node, Args... args) {
     auto& context = BaseCompileContext::get();
     auto action = context.getDefaultErrorDiagnosticAction();
-    context.errorReporter().diagnose(action, kind, format, suffix, node, args...);
+    context.errorReporter()->diagnose(action, kind, format, suffix, node, args...);
 }
 
 /// The const ref variant of the above
@@ -111,7 +111,7 @@ template<typename... Args>
 void error(const int kind, const char *format, Args... args) {
     auto& context = BaseCompileContext::get();
     auto action = context.getDefaultErrorDiagnosticAction();
-    context.errorReporter().diagnose(action, kind, format, "", std::forward<Args>(args)...);
+    context.errorReporter()->diagnose(action, kind, format, "", std::forward<Args>(args)...);
 }
 
 #if LEGACY
@@ -120,7 +120,7 @@ template <typename... T>
 inline void warning(const char* format, T... args) {
     auto& context = BaseCompileContext::get();
     auto action = context.getDefaultWarningDiagnosticAction();
-    context.errorReporter().diagnose(action, nullptr, format, "", args...);
+    context.errorReporter()->diagnose(action, nullptr, format, "", args...);
 }
 #endif
 
@@ -131,7 +131,7 @@ template<class T,
 void warning(const int kind, const char *format, const T *node, Args... args) {
     auto& context = BaseCompileContext::get();
     auto action = context.getDefaultWarningDiagnosticAction();
-    context.errorReporter().diagnose(action, kind, format, "", node, args...);
+    context.errorReporter()->diagnose(action, kind, format, "", node, args...);
 }
 
 /// The const ref variant of the above
@@ -148,7 +148,7 @@ template<typename... Args>
 void warning(const int kind, const char *format, Args... args) {
     auto& context = BaseCompileContext::get();
     auto action = context.getDefaultWarningDiagnosticAction();
-    context.errorReporter().diagnose(action, kind, format, "", std::forward<Args>(args)...);
+    context.errorReporter()->diagnose(action, kind, format, "", std::forward<Args>(args)...);
 }
 
 /**
@@ -169,7 +169,7 @@ inline void diagnose(DiagnosticAction defaultAction, const char* diagnosticName,
                      const char* format, const char* suffix, T... args) {
     auto& context = BaseCompileContext::get();
     auto action = context.getDiagnosticAction(diagnosticName, defaultAction);
-    context.errorReporter().diagnose(action, diagnosticName, format, suffix, args...);
+    context.errorReporter()->diagnose(action, diagnosticName, format, suffix, args...);
 }
 
 #endif /* P4C_LIB_ERROR_H_ */

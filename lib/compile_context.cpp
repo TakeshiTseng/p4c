@@ -59,7 +59,8 @@ AutoCompileContext::~AutoCompileContext() {
     CompileContextStack::pop();
 }
 
-BaseCompileContext::BaseCompileContext() { }
+BaseCompileContext::BaseCompileContext()
+    : errorReporterInstance(std::make_shared<ErrorReporter>()) { }
 
 BaseCompileContext::BaseCompileContext(const BaseCompileContext& other)
     : errorReporterInstance(other.errorReporterInstance) { }
@@ -68,7 +69,7 @@ BaseCompileContext::BaseCompileContext(const BaseCompileContext& other)
     return CompileContextStack::top<BaseCompileContext>();
 }
 
-ErrorReporter& BaseCompileContext::errorReporter() {
+std::shared_ptr<ErrorReporter> BaseCompileContext::errorReporter() {
     return errorReporterInstance;
 }
 
@@ -86,6 +87,6 @@ BaseCompileContext::getDiagnosticAction(cstring /* diagnostic */,
     return defaultAction;
 }
 
-void BaseCompileContext::setErrorReporter(ErrorReporter errorReporter) {
+void BaseCompileContext::setErrorReporter(std::shared_ptr<ErrorReporter> errorReporter) {
     errorReporterInstance = errorReporter;
 }
